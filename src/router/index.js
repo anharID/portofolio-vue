@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/auth'
 import DashboardView from '../views/admin/DashboardView.vue'
 import LoginView from '../views/LoginView.vue'
 import PersonalInfoView from '../views/admin/PersonalInfoView.vue'
+import ProjectsView from '../views/admin/ProjectsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,11 @@ const router = createRouter({
           path: 'personal',
           name: 'admin-personal',
           component: PersonalInfoView,
+        },
+        {
+          path: 'projects',
+          name: 'admin-projects',
+          component: ProjectsView,
         },
       ],
     },
