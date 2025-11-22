@@ -7,11 +7,10 @@ import PersonalInfoView from '../components/admin/PersonalInfoView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: () => import('../views/HomeView.vue'),
-    // },
+    {
+      path: '/',
+      redirect: '/login',
+    },
     {
       path: '/login',
       name: 'login',
@@ -45,7 +44,6 @@ router.beforeEach(async (to, from, next) => {
     await authStore.fetchUser()
   }
 
-  // Logika Proteksi
   if (to.meta.requiresAuth && !authStore.user) {
     next('/login')
   } else if (to.meta.guest && authStore.user) {
