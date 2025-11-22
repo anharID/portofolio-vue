@@ -10,8 +10,8 @@ import {
   X,
 } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
-// Terima props dari AdminLayout untuk mengontrol buka/tutup
 defineProps({
   isOpen: {
     type: Boolean,
@@ -19,7 +19,6 @@ defineProps({
   },
 })
 
-// Emit event ke parent untuk menutup sidebar
 const emit = defineEmits(['close'])
 
 const route = useRoute()
@@ -33,10 +32,14 @@ const menuItems = [
   { name: 'Messages', path: '/admin/messages', icon: MessageSquare },
 ]
 
-// Fungsi helper untuk menutup sidebar saat menu diklik (khusus mobile)
+const authStore = useAuthStore()
+
+const handleLogout = () => {
+  authStore.signOut()
+}
+
 const handleItemClick = () => {
   if (window.innerWidth < 768) {
-    // 768px adalah breakpoint 'md' tailwind
     emit('close')
   }
 }
@@ -86,6 +89,7 @@ const handleItemClick = () => {
     <div class="p-4 border-t border-gray-100">
       <button
         class="flex items-center w-full px-3 py-2.5 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
+        @click="handleLogout"
       >
         <LogOut class="w-5 h-5 mr-3" />
         Sign Out
