@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+/* Custom Font (Optional - agar modern seperti request) */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
