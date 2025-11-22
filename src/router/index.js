@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import DashboardView from '../views/admin/DashboardView.vue'
 import LoginView from '../views/LoginView.vue'
+import PersonalInfoView from '../components/admin/PersonalInfoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
           path: 'dashboard',
           name: 'admin-dashboard',
           component: DashboardView,
+        },
+        {
+          path: 'personal',
+          name: 'admin-personal',
+          component: PersonalInfoView,
         },
       ],
     },
