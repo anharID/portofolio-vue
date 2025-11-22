@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import PersonalInfoView from '../views/admin/PersonalInfoView.vue'
 import ProjectsView from '../views/admin/ProjectsView.vue'
 import TechStackView from '../views/admin/TechStackView.vue'
+import CertificatesView from '../views/admin/CertificatesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,11 @@ const router = createRouter({
           path: 'tech-stack',
           name: 'admin-tech-stack',
           component: TechStackView,
+        },
+        {
+          path: 'certificates',
+          name: 'admin-certificates',
+          component: CertificatesView,
         },
       ],
     },

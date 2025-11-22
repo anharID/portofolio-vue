@@ -80,11 +80,11 @@ const uploadIcon = async () => {
   // Simpan di folder 'tech/' agar terpisah dari projects
   const fileName = `tech/${Date.now()}.${fileExt}`
 
-  const { error } = await supabase.storage.from('portfolio').upload(fileName, imageFile.value)
+  const { error } = await supabase.storage.from('portofolio').upload(fileName, imageFile.value)
 
   if (error) throw error
 
-  const { data } = supabase.storage.from('portfolio').getPublicUrl(fileName)
+  const { data } = supabase.storage.from('portofolio').getPublicUrl(fileName)
 
   return data.publicUrl
 }
@@ -138,8 +138,8 @@ const deleteTechStack = async (id, iconUrl) => {
 
     // Hapus file icon dari storage jika ada
     if (iconUrl) {
-      const path = iconUrl.split('/portfolio/')[1]
-      if (path) await supabase.storage.from('portfolio').remove([path])
+      const path = iconUrl.split('/portofolio/')[1]
+      if (path) await supabase.storage.from('portofolio').remove([path])
     }
 
     techStacks.value = techStacks.value.filter((item) => item.id !== id)
@@ -330,7 +330,7 @@ onMounted(() => {
         <div class="p-6 space-y-5">
           <div class="flex items-center gap-4">
             <div
-              class="w-16 h-16 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden relative group cursor-pointer"
+              class="w-16 h-16 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center shrink-0 overflow-hidden relative group cursor-pointer"
               @click="$refs.fileInput.click()"
             >
               <img
