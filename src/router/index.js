@@ -4,6 +4,7 @@ import DashboardView from '../views/admin/DashboardView.vue'
 import LoginView from '../views/LoginView.vue'
 import PersonalInfoView from '../views/admin/PersonalInfoView.vue'
 import ProjectsView from '../views/admin/ProjectsView.vue'
+import TechStackView from '../views/admin/TechStackView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,11 @@ const router = createRouter({
           path: 'projects',
           name: 'admin-projects',
           component: ProjectsView,
+        },
+        {
+          path: 'tech-stack',
+          name: 'admin-tech-stack',
+          component: TechStackView,
         },
       ],
     },
