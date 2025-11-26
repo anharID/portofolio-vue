@@ -7,13 +7,40 @@ import ProjectsView from '../views/admin/ProjectsView.vue'
 import TechStackView from '../views/admin/TechStackView.vue'
 import CertificatesView from '../views/admin/CertificatesView.vue'
 import MessagesView from '../views/admin/MessagesView.vue'
+import HomeView from '../views/HomeView.vue'
+import AllProjectsView from '../views/AllProjectsView.vue'
+import AllCertificatesView from '../views/AllCertificatesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+        top: 80, // Offset supaya tidak tertutup Navbar
+      }
+    }
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',
-      redirect: '/login',
+      name: 'home',
+      component: HomeView,
+    },
+    {
+      path: '/all-projects',
+      name: 'all-projects',
+      component: AllProjectsView,
+    },
+    {
+      path: '/all-certificates',
+      name: 'all-certificates',
+      component: AllCertificatesView,
     },
     {
       path: '/login',

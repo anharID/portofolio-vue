@@ -165,7 +165,7 @@ onMounted(() => {
         <div class="flex justify-between items-start mb-4">
           <div class="flex items-center gap-3">
             <div
-              class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm"
+              class="w-10 h-10 rounded-full bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm"
             >
               {{ msg.name.charAt(0).toUpperCase() }}
             </div>
