@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { supabase } from '@/lib/supabase'
+import { storeToRefs } from 'pinia'
+import { usePortofolioStore } from '@/stores/portofolio'
 import NavBar from '@/components/NavbarComponent.vue'
 import Footer from '@/components/FooterComponent.vue'
 import {
@@ -10,17 +11,15 @@ import {
   Twitter,
   Facebook,
   ExternalLink,
-  Mail,
   ArrowRight,
   Loader2,
   Send,
 } from 'lucide-vue-next'
 
+const portofolioStore = usePortofolioStore()
+
 // --- State ---
-const profile = ref(null)
-const projects = ref([])
-const certificates = ref([])
-const techStack = ref([])
+const { profile, projects, certificates, techStack } = storeToRefs(portofolioStore)
 const loading = ref(true)
 
 // Contact Form State
@@ -31,29 +30,7 @@ const sentSuccess = ref(false)
 // --- Fetch Data ---
 const fetchData = async () => {
   try {
-    // 1. Profile
-    const { data: profileData } = await supabase.from('personal_info').select('*').single()
-    profile.value = profileData
-
-    // 2. Projects (Limit 3)
-    const { data: projData } = await supabase
-      .from('projects')
-      .select('*, project_tech_stack(tech_stack(name))')
-      .order('created_at', { ascending: false })
-      .limit(3)
-    projects.value = projData
-
-    // 3. Certificates (Limit 3)
-    const { data: certData } = await supabase
-      .from('certificates')
-      .select('*')
-      .order('date_issued', { ascending: false })
-      .limit(3)
-    certificates.value = certData
-
-    // 4. Tech Stack (All)
-    const { data: stackData } = await supabase.from('tech_stack').select('*')
-    techStack.value = stackData
+    await portofolioStore.fetchHomeData()
   } catch (error) {
     console.error('Error fetching home data:', error)
   } finally {
@@ -67,18 +44,16 @@ const submitContact = async () => {
 
   sending.value = true
   try {
-    const { error } = await supabase.from('contacts').insert({
+    await portofolioStore.submitContactMessage({
       name: contactForm.value.name,
       email: contactForm.value.email,
       message: contactForm.value.message,
     })
 
-    if (error) throw error
-
     sentSuccess.value = true
     contactForm.value = { name: '', email: '', message: '' }
     setTimeout(() => (sentSuccess.value = false), 5000) // Reset success msg
-  } catch (error) {
+  } catch {
     alert('Gagal mengirim pesan. Silakan coba lagi.')
   } finally {
     sending.value = false

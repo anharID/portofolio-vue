@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import DashboardView from '../views/admin/DashboardView.vue'
-import LoginView from '../views/LoginView.vue'
-import PersonalInfoView from '../views/admin/PersonalInfoView.vue'
-import ProjectsView from '../views/admin/ProjectsView.vue'
-import TechStackView from '../views/admin/TechStackView.vue'
-import CertificatesView from '../views/admin/CertificatesView.vue'
-import MessagesView from '../views/admin/MessagesView.vue'
-import HomeView from '../views/HomeView.vue'
-import AllProjectsView from '../views/AllProjectsView.vue'
-import AllCertificatesView from '../views/AllCertificatesView.vue'
+const DashboardView = () => import('../views/admin/DashboardView.vue')
+const LoginView = () => import('../views/LoginView.vue')
+const PersonalInfoView = () => import('../views/admin/PersonalInfoView.vue')
+const ProjectsView = () => import('../views/admin/ProjectsView.vue')
+const TechStackView = () => import('../views/admin/TechStackView.vue')
+const CertificatesView = () => import('../views/admin/CertificatesView.vue')
+const MessagesView = () => import('../views/admin/MessagesView.vue')
+const HomeView = () => import('../views/HomeView.vue')
+const AllProjectsView = () => import('../views/AllProjectsView.vue')
+const AllCertificatesView = () => import('../views/AllCertificatesView.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

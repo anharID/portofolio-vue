@@ -11,6 +11,11 @@ export const usePortofolioStore = defineStore('portofolio', () => {
     unreadMessages: 0,
   })
 
+  // Home Page State
+  const projects = ref([])
+  const certificates = ref([])
+  const techStack = ref([])
+
   // 1. Fetch Data Profil (Nama, Foto, dll)
   const fetchProfile = async () => {
     const { data } = await supabase.from('personal_info').select('*').single()
@@ -48,5 +53,53 @@ export const usePortofolioStore = defineStore('portofolio', () => {
     }
   }
 
-  return { profile, stats, fetchProfile, fetchStats }
+  // 3. Fetch Data untuk Halaman Home
+  const fetchHomeData = async () => {
+    try {
+      if (!profile.value) {
+        await fetchProfile()
+      }
+
+      // Projects (Limit 3)
+      const { data: projData } = await supabase
+        .from('projects')
+        .select('*, project_tech_stack(tech_stack(name))')
+        .order('created_at', { ascending: false })
+        .limit(3)
+      if (projData) projects.value = projData
+
+      // Certificates (Limit 3)
+      const { data: certData } = await supabase
+        .from('certificates')
+        .select('*')
+        .order('date_issued', { ascending: false })
+        .limit(3)
+      if (certData) certificates.value = certData
+
+      // Tech Stack (All)
+      const { data: stackData } = await supabase.from('tech_stack').select('*')
+      if (stackData) techStack.value = stackData
+    } catch (error) {
+      console.error('Error fetching home data:', error)
+      throw error
+    }
+  }
+
+  // 4. Submit Contact Message
+  const submitContactMessage = async (contactData) => {
+    const { error } = await supabase.from('contacts').insert(contactData)
+    if (error) throw error
+  }
+
+  return {
+    profile,
+    stats,
+    projects,
+    certificates,
+    techStack,
+    fetchProfile,
+    fetchStats,
+    fetchHomeData,
+    submitContactMessage,
+  }
 })
